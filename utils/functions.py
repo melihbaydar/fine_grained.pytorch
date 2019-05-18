@@ -27,8 +27,14 @@ def train_epoch(epoch, train_loader, model, criterion, optimizer):
         data_time.update(time.time() - end)
 
         # forward + backward + optimize
-        outputs = model(inputs)
-        loss = criterion(outputs, labels)
+        if type(model).__name__ == 'Inception3' and model.aux_logits:
+            outputs, aux_outputs = model(inputs)
+            loss_aux = criterion(aux_outputs, labels)
+            loss_final = criterion(outputs, labels)
+            loss = loss_final + 0.4*loss_aux
+        else:
+            outputs = model(inputs)
+            loss = criterion(outputs, labels)
         acc1, acc5 = utils.accuracy(outputs, labels, topk=(1, 5))
         losses.update(loss.item(), inputs.size(0))
         top1.update(acc1[0], inputs.size(0))
