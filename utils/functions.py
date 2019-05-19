@@ -14,8 +14,8 @@ def train_epoch(epoch, train_loader, model, criterion, optimizer):
     top1 = utils.AverageMeter('Acc@1', ':6.2f')
     top5 = utils.AverageMeter('Acc@5', ':6.2f')
     progress = utils.ProgressMeter(
-        len(train_loader), batch_time, data_time, losses,
-        top1, top5, prefix="Epoch: [{}]".format(epoch + 1))
+        len(train_loader), batch_time, data_time,
+        top1, top5, losses, prefix="Epoch: [{}]".format(epoch + 1))
 
     print_freq = len(train_loader) // 4 + 1
     model.train()
@@ -61,8 +61,8 @@ def validate_epoch(val_loader, model, criterion):
     losses = utils.AverageMeter('Loss', ':.4e')
     top1 = utils.AverageMeter('Acc@1', ':6.2f')
     top5 = utils.AverageMeter('Acc@5', ':6.2f')
-    progress = utils.ProgressMeter(len(val_loader), batch_time, losses, top1, top5,
-                                   prefix='Test: ')
+    progress = utils.ProgressMeter(len(val_loader), batch_time, top1, top5, losses,
+                                   prefix='Val: ')
 
     # switch to evaluate mode
     model.eval()
@@ -93,7 +93,7 @@ def validate_epoch(val_loader, model, criterion):
         return top1.avg, top5.avg
 
 
-def test_cassava(test_loader, model, class_names, tencrop_test):
+def test_cassava(test_loader, model, class_names, tencrop_test, args):
     end = time.time()
     model.eval()
     preds = []
@@ -119,4 +119,7 @@ def test_cassava(test_loader, model, class_names, tencrop_test):
 
     results_dict = {'Category': preds, 'Id': image_names}
     results_df = pd.DataFrame(results_dict)
-    results_df.to_csv('Submission1.csv', index=False)
+    submission_file = 'Epoch{}_{}_{}_{}_{}{}.csv'.format(
+        args.num_epoch, args.model_input_size, args.arch,
+        args.optim, args.batch_size, '_subset' if args.subset_finetune else '')
+    results_df.to_csv(submission_file, index=False)

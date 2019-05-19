@@ -57,8 +57,9 @@ def main():
     model = model_factory.generate_model(args.arch, num_classes, state_dict)
     optimizer = get_optimizer(args, model, optimizer_dict)
     if args.subset_finetune:
+        args.lr = 1e-6
         for param_group in optimizer.param_groups:
-            param_group['lr'] = 1e-6
+            param_group['lr'] = args.lr
             begin_epoch = 0
 
     if args.train:
