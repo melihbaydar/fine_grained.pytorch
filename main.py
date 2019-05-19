@@ -44,14 +44,16 @@ def main():
     if args.resume_path:
         print('Loading finetuned model from {}..', args.resume_path)
         checkpoint = torch.load(args.resume_path)
-        begin_epoch = checkpoint['epoch'] + 1
-        best_epoch = begin_epoch
+        begin_epoch = checkpoint['epoch']
+        # best_epoch = begin_epoch
+        best_epoch = checkpoint['best_epoch']
         best_perf1 = checkpoint['perf1']
         best_perf5 = checkpoint['perf5']
         args.arch = checkpoint['arch']
         num_classes = checkpoint['num_classes']
         state_dict = checkpoint['state_dict']
         optimizer_dict = checkpoint['optimizer']
+        print('Begin epoch: ', begin_epoch)
         # scheduler.load_state_dict(checkpoint['scheduler'])
 
     model = model_factory.generate_model(args.arch, num_classes, state_dict)
@@ -61,6 +63,7 @@ def main():
         for param_group in optimizer.param_groups:
             param_group['lr'] = args.lr
             begin_epoch = 0
+    print('Learning rate: {:1.1e}', optimizer.param_groups[0]['lr'])
 
     if args.train:
         for epoch in range(begin_epoch, args.num_epochs):
@@ -81,8 +84,13 @@ def main():
                 best_perf5 = perf_indicator5
                 best_epoch = epoch
 
+                checkpoint_file = '{}_{}_{}_{}{}'.format(
+                    args.model_input_size, args.arch, args.optim,
+                    args.batch_size, '_subset' if args.subset_finetune else '')
+
                 save_checkpoint({
-                    'epoch': best_epoch + 1,
+                    'epoch': epoch + 1,
+                    'best_epoch': best_epoch + 1,
                     'perf1': best_perf1,
                     'perf5': best_perf5,
                     'arch': args.arch,
@@ -93,13 +101,13 @@ def main():
                 }, dir_path, is_best=True, filename=checkpoint_file)
 
             if (epoch+1) % 5 == 0:
-                checkpoint_file = 'Epoch{}_{}_{}_{}_{}'.format(
-                    epoch+1, args.model_input_size, args.arch,
-                    args.optim, args.batch_size) + \
-                    '_subset' if args.subset_finetune else ''
+                checkpoint_file = 'Epoch{}_{}_{}_{}_{}{}'.format(
+                    epoch + 1, args.model_input_size, args.arch, args.optim,
+                    args.batch_size, '_subset' if args.subset_finetune else '')
 
                 save_checkpoint({
-                    'epoch': best_epoch + 1,
+                    'epoch': epoch + 1,
+                    'best_epoch': best_epoch + 1,
                     'perf1': best_perf1,
                     'perf5': best_perf5,
                     'arch': args.arch,
