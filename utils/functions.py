@@ -119,4 +119,4 @@ def test_cassava(test_loader, model, class_names, tencrop_test):
 
     results_dict = {'Category': preds, 'Id': image_names}
     results_df = pd.DataFrame(results_dict)
-    results_df.to_csv('Submission.csv', index=False)
+    results_df.to_csv('Submission1.csv', index=False)

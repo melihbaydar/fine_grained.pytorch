@@ -83,8 +83,8 @@ def main():
             if (epoch+1) % 5 == 0:
                 checkpoint_file = 'Epoch{}_{}_{}_{}_{}'.format(
                     epoch+1, args.model_input_size, args.arch,
-                    args.optim, args.batch_size
-                )
+                    args.optim, args.batch_size) + \
+                    '_subset' if args.subset_finetune else ''
 
                 save_checkpoint({
                     'epoch': best_epoch + 1,
