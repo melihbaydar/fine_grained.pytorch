@@ -81,6 +81,17 @@ def main():
                 best_perf5 = perf_indicator5
                 best_epoch = epoch
 
+                save_checkpoint({
+                    'epoch': best_epoch + 1,
+                    'perf1': best_perf1,
+                    'perf5': best_perf5,
+                    'arch': args.arch,
+                    'num_classes': model.num_classes,
+                    'state_dict': model.state_dict(),
+                    'optimizer': optimizer.state_dict(),
+                    # 'scheduler': scheduler.state_dict(),
+                }, dir_path, is_best=True, filename=checkpoint_file)
+
             if (epoch+1) % 5 == 0:
                 checkpoint_file = 'Epoch{}_{}_{}_{}_{}'.format(
                     epoch+1, args.model_input_size, args.arch,
@@ -104,7 +115,7 @@ def main():
                 best_perf1, best_perf5, best_epoch+1))
 
     if args.test:
-        test_cassava(test_loader, model, train_set.classes, args.tencrop_test)
+        test_cassava(test_loader, model, train_set.classes, args.tencrop_test, args)
 
 
 if __name__ == '__main__':
