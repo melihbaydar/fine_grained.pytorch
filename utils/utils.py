@@ -90,7 +90,7 @@ def adjust_learning_rate(optimizer, epoch, args):
         lr = args.lr * (0.1 ** (epoch // 20))
         for param_group in optimizer.param_groups:
             if param_group['lr'] != lr:
-                print('Decreasing learning rate to {:.1e}'.format(lr))
+                print('Decreasing learning rate to {:1.5f}'.format(lr))
             param_group['lr'] = lr
 
 

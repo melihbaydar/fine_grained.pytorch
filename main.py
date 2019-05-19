@@ -63,7 +63,7 @@ def main():
         for param_group in optimizer.param_groups:
             param_group['lr'] = args.lr
             begin_epoch = 0
-    print('Learning rate: {:1.1e}', optimizer.param_groups[0]['lr'])
+    print('Learning rate: {:.1e}', optimizer.param_groups[0]['lr'])
 
     if args.train:
         for epoch in range(begin_epoch, args.num_epochs):
