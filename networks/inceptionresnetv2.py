@@ -1,4 +1,3 @@
-from __future__ import print_function, division, absolute_import
 import torch
 import torch.nn as nn
 from torch.utils.model_zoo import load_url as load_state_dict_from_url

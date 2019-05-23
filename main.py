@@ -19,20 +19,28 @@ def main():
     print("Batch size: ", args.batch_size)
     print('Arch: ', args.arch)
     print('Optimizer: ', args.optim)
+    print('{}'.format('Weighted loss' if args.use_class_weights else 'Balanced loss'))
 
     dir_path = os.path.dirname(__file__)
 
     print('Loading dataset and dataloader..')
     train_set, train_loader = data_fact.get_dataloader(args, 'train')
-    if args.subset_finetune:
-        train_set, train_loader = data_fact.get_dataloader(args, 'subset')
+    # if args.subset_finetune:
+    #     train_set, train_loader = data_fact.get_dataloader(args, 'subset')
     if args.validate:
         val_set, val_loader = data_fact.get_dataloader(args, 'val')
     if args.test:
         test_set, test_loader = data_fact.get_dataloader(args, 'test')
     num_classes = len(train_set.classes)
 
-    criterion = nn.CrossEntropyLoss()
+    class_weights = [1] * num_classes
+    if args.use_class_weights:
+        class_weights = train_set.class_weights
+    class_weights = torch.Tensor(class_weights)
+
+    criterion = nn.CrossEntropyLoss(class_weights)
+    if args.use_cuda:
+        criterion = criterion.cuda()
 
     best_perf1 = 0
     best_perf5 = 0
@@ -56,7 +64,7 @@ def main():
         print('Begin epoch: ', begin_epoch)
         # scheduler.load_state_dict(checkpoint['scheduler'])
 
-    model = model_factory.generate_model(args.arch, num_classes, state_dict)
+    model = model_factory.generate_model(args.arch, num_classes, state_dict, args.use_cuda)
     optimizer = get_optimizer(args, model, optimizer_dict)
     if args.subset_finetune:
         args.lr = 1e-6
@@ -70,11 +78,11 @@ def main():
             print('Epoch: {} / {}'.format(epoch+1, args.num_epochs))
 
             perf_indicator1, perf_indicator5 = train_epoch(
-                epoch, train_loader, model, criterion, optimizer)
+                epoch, train_loader, model, criterion, optimizer, args.use_cuda)
 
             if args.validate:
                 perf_indicator1, perf_indicator5 = validate_epoch(
-                    val_loader, model, criterion)
+                    val_loader, model, criterion, args.use_cuda)
             # scheduler.step(perf_indicator1)
             if epoch+1 < 45:
                 adjust_learning_rate(optimizer, epoch+1, args)

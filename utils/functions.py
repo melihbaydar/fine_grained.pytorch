@@ -7,7 +7,7 @@ import pandas as pd
 from utils import _init_paths
 
 
-def train_epoch(epoch, train_loader, model, criterion, optimizer):
+def train_epoch(epoch, train_loader, model, criterion, optimizer, use_cuda=True):
     batch_time = utils.AverageMeter('Time', ':6.3f')
     data_time = utils.AverageMeter('Data', ':6.3f')
     losses = utils.AverageMeter('Loss', ':.4e')
@@ -20,10 +20,10 @@ def train_epoch(epoch, train_loader, model, criterion, optimizer):
     print_freq = len(train_loader) // 4 + 1
     model.train()
     end = time.time()
-    for i, (inputs, labels) in enumerate(train_loader):
-        # get the inputs
-        (_, inputs) = inputs  # remove image paths from inputs tuple
-        inputs, labels = inputs.cuda(), labels.cuda()
+    for i, (_, inputs, labels) in enumerate(train_loader):
+
+        if use_cuda:
+            inputs, labels = inputs.cuda(), labels.cuda()
         data_time.update(time.time() - end)
 
         # forward + backward + optimize
@@ -56,7 +56,7 @@ def train_epoch(epoch, train_loader, model, criterion, optimizer):
     return top1.avg, top5.avg
 
 
-def validate_epoch(val_loader, model, criterion):
+def validate_epoch(val_loader, model, criterion, use_cuda=True):
     batch_time = utils.AverageMeter('Time', ':6.3f')
     losses = utils.AverageMeter('Loss', ':.4e')
     top1 = utils.AverageMeter('Acc@1', ':6.2f')
@@ -69,9 +69,9 @@ def validate_epoch(val_loader, model, criterion):
     print_freq = len(val_loader) // 4 + 1
     with torch.no_grad():
         end = time.time()
-        for i, (inputs, labels) in enumerate(val_loader):
-            (_, inputs) = inputs  # remove image paths from inputs tuple
-            inputs, labels = inputs.cuda(), labels.cuda()
+        for i, (_, inputs, labels) in enumerate(val_loader):
+            if use_cuda:
+                inputs, labels = inputs.cuda(), labels.cuda()
 
             # compute output
             outputs = model(inputs)
@@ -100,11 +100,11 @@ def test_cassava(test_loader, model, class_names, tencrop_test, args):
     image_names = []
     report_freq = len(test_loader) // 9 + 1
     with torch.no_grad():
-        for i, (input, label) in enumerate(test_loader):
-            (path, input) = input  # remove image paths from inputs tuple
+        for i, (path, input, label) in enumerate(test_loader):
             # print(path)
             image_names.append(path[0].split('/')[-1])
-            input = input.cuda()
+            if args.use_cuda:
+                input = input.cuda()
             if tencrop_test:
                 bs, ncrops, c, h, w = input.size()
                 outputs = model(input.view(-1, c, h, w))  # fuse batch size and ncrop

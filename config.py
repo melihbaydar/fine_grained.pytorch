@@ -13,6 +13,9 @@ def str2bool(v):
 def parse_args():
     parser = argparse.ArgumentParser(
         description='Main argument parser')
+    parser.add_argument("--use_cuda", type=str2bool,
+                        nargs='?', default=True,
+                        help="GPU flag.")
     parser.add_argument('--model_input_size',
                         help='Input resolution to feed to network',
                         type=int,
@@ -40,6 +43,10 @@ def parse_args():
     parser.add_argument("--train", type=str2bool,
                         nargs='?', default=True,
                         help="Training flag.")
+    parser.add_argument("--use_extraimages", type=str2bool,
+                        nargs='?', default=False,
+                        help="Use labeled extra images in train set if true.  "
+                             "P.S. extra images should be labeled beforehand.")
     parser.add_argument("--validate", type=str2bool,
                         nargs='?', default=False,
                         help="Validation flag.")
@@ -49,6 +56,9 @@ def parse_args():
     parser.add_argument("--subset_finetune", type=str2bool,
                         nargs='?', default=False,
                         help="Test flag.")
+    parser.add_argument("--use_class_weights", type=str2bool,
+                        nargs='?', default=False,
+                        help="Use class weights in loss function against imbalanced data if true.")
     parser.add_argument("--tencrop_test", type=str2bool,
                         nargs='?', default=False,
                         help="Tencrop testing mode flag.")
