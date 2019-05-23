@@ -4,7 +4,7 @@ import torchvision.transforms as transforms
 from dataloaders import cassava_folder
 
 
-def get_dataloader(args, data_split, split_percentage=0.8):
+def get_dataloader(args, data_split, train_percentage=0.8):
     # initialize datasets and dataloaders
     # resize_res: 256 for 224, 512 for 448, 640 for 560
     resize_res = int(args.model_input_size * 1000 / 875)
@@ -26,7 +26,7 @@ def get_dataloader(args, data_split, split_percentage=0.8):
         ])
         dataset = cassava_folder.CassavaFolder(
             root=dir_path + '/../cassava', split='train',
-            split_percentage=split_percentage, transform=train_transform)
+            split_percentage=train_percentage, transform=train_transform)
         num_train_samples = len(dataset)
 
         if args.use_extraimages:
@@ -56,7 +56,7 @@ def get_dataloader(args, data_split, split_percentage=0.8):
 
         dataset = cassava_folder.CassavaFolder(
             root=dir_path + '/../cassava', split='val',
-            split_percentage=split_percentage, transform=val_transform)
+            split_percentage=train_percentage, transform=val_transform)
 
         loader = torch.utils.data.DataLoader(
             dataset, batch_size=args.batch_size,
