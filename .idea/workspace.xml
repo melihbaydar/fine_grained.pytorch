@@ -7,8 +7,6 @@
       <change beforePath="$PROJECT_DIR$/dataloaders/cassava_folder.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataloaders/cassava_folder.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dataloaders/dataloader_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataloaders/dataloader_factory.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networks/inceptionresnetv2.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/inceptionresnetv2.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/networks/model_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/networks/model_factory.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/functions.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/functions.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -23,8 +21,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="198">
-              <caret line="29" column="21" lean-forward="true" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
+            <state relative-caret-position="-1332">
+              <caret line="21" column="51" selection-start-line="21" selection-start-column="51" selection-end-line="21" selection-end-column="51" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -35,8 +33,8 @@
       <file leaf-file-name="dataloader_factory.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dataloaders/dataloader_factory.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="324">
-              <caret line="42" column="58" lean-forward="true" selection-start-line="42" selection-start-column="58" selection-end-line="42" selection-end-column="58" />
+            <state relative-caret-position="402">
+              <caret line="29" column="40" selection-start-line="29" selection-start-column="40" selection-end-line="29" selection-end-column="40" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -59,8 +57,8 @@
       <file leaf-file-name="cassava_folder.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dataloaders/cassava_folder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-226">
-              <caret line="82" column="5" selection-start-line="82" selection-start-column="5" selection-end-line="82" selection-end-column="5" />
+            <state relative-caret-position="264">
+              <caret line="128" column="43" lean-forward="true" selection-start-line="128" selection-start-column="43" selection-end-line="128" selection-end-column="43" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -68,11 +66,20 @@
           </provider>
         </entry>
       </file>
+      <file leaf-file-name="folder.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/anaconda2/envs/PyTorch/lib/python3.6/site-packages/torchvision/datasets/folder.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="270">
+              <caret line="137" column="29" lean-forward="true" selection-start-line="137" selection-start-column="29" selection-end-line="140" selection-end-column="32" />
+            </state>
+          </provider>
+        </entry>
+      </file>
       <file leaf-file-name="functions.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/functions.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1296">
-              <caret line="10" column="52" lean-forward="true" selection-start-line="10" selection-start-column="52" selection-end-line="10" selection-end-column="52" />
+            <state relative-caret-position="108">
+              <caret line="21" column="21" lean-forward="true" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="21" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -95,8 +102,8 @@
       <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="216">
-              <caret line="48" column="79" lean-forward="true" selection-start-line="48" selection-start-column="79" selection-end-line="48" selection-end-column="79" />
+            <state relative-caret-position="270">
+              <caret line="58" column="44" selection-start-line="58" selection-start-column="44" selection-end-line="58" selection-end-column="44" />
             </state>
           </provider>
         </entry>
@@ -123,6 +130,8 @@
       <find>cuda</find>
       <find>extra</find>
       <find>genera</find>
+      <find>lenim</find>
+      <find>use_class_weights</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -135,12 +144,12 @@
         <option value="$PROJECT_DIR$/utils/utils.py" />
         <option value="$PROJECT_DIR$/networks/inceptionv4.py" />
         <option value="$PROJECT_DIR$/networks/inceptionresnetv2.py" />
-        <option value="$PROJECT_DIR$/dataloaders/cassava_folder.py" />
-        <option value="$PROJECT_DIR$/utils/functions.py" />
         <option value="$PROJECT_DIR$/networks/model_factory.py" />
+        <option value="$PROJECT_DIR$/utils/functions.py" />
+        <option value="$PROJECT_DIR$/dataloaders/dataloader_factory.py" />
+        <option value="$PROJECT_DIR$/dataloaders/cassava_folder.py" />
         <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/main.py" />
-        <option value="$PROJECT_DIR$/dataloaders/dataloader_factory.py" />
       </list>
     </option>
   </component>
@@ -346,27 +355,47 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/anaconda2/envs/PyTorch/lib/python3.6/site-packages/torchvision/datasets/folder.py">
+    <entry file="file://$PROJECT_DIR$/networks/inception.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="522">
-          <caret line="35" selection-start-line="35" selection-end-line="50" selection-end-column="17" />
+        <state relative-caret-position="270">
+          <caret line="15" column="41" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="41" />
+          <folding>
+            <element signature="e#0#34#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataloaders/cassava_folder.py">
+    <entry file="file://$PROJECT_DIR$/dataloaders/dataloader_factory.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-226">
-          <caret line="82" column="5" selection-start-line="82" selection-start-column="5" selection-end-line="82" selection-end-column="5" />
+        <state relative-caret-position="402">
+          <caret line="29" column="40" selection-start-line="29" selection-start-column="40" selection-end-line="29" selection-end-column="40" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/utils/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-648">
+          <caret line="6" column="45" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="45" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda2/envs/PyTorch/lib/python3.6/site-packages/torchvision/datasets/folder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="270">
+          <caret line="137" column="29" lean-forward="true" selection-start-line="137" selection-start-column="29" selection-end-line="140" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/utils/functions.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1296">
-          <caret line="10" column="52" lean-forward="true" selection-start-line="10" selection-start-column="52" selection-end-line="10" selection-end-column="52" />
+        <state relative-caret-position="108">
+          <caret line="21" column="21" lean-forward="true" selection-start-line="21" selection-start-column="21" selection-end-line="21" selection-end-column="21" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
@@ -383,37 +412,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/networks/inception.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
-          <caret line="15" column="41" selection-start-line="15" selection-start-column="41" selection-end-line="15" selection-end-column="41" />
-          <folding>
-            <element signature="e#0#34#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utils/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-648">
-          <caret line="6" column="45" selection-start-line="6" selection-start-column="45" selection-end-line="6" selection-end-column="45" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="48" column="79" lean-forward="true" selection-start-line="48" selection-start-column="79" selection-end-line="48" selection-end-column="79" />
+        <state relative-caret-position="270">
+          <caret line="58" column="44" selection-start-line="58" selection-start-column="44" selection-end-line="58" selection-end-column="44" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataloaders/dataloader_factory.py">
+    <entry file="file://$PROJECT_DIR$/dataloaders/cassava_folder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="324">
-          <caret line="42" column="58" lean-forward="true" selection-start-line="42" selection-start-column="58" selection-end-line="42" selection-end-column="58" />
+        <state relative-caret-position="264">
+          <caret line="128" column="43" lean-forward="true" selection-start-line="128" selection-start-column="43" selection-end-line="128" selection-end-column="43" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
@@ -422,8 +431,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="198">
-          <caret line="29" column="21" lean-forward="true" selection-start-line="29" selection-start-column="21" selection-end-line="29" selection-end-column="21" />
+        <state relative-caret-position="-1332">
+          <caret line="21" column="51" selection-start-line="21" selection-start-column="51" selection-end-line="21" selection-end-column="51" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>

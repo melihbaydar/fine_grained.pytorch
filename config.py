@@ -56,7 +56,7 @@ def parse_args():
     parser.add_argument("--subset_finetune", type=str2bool,
                         nargs='?', default=False,
                         help="Test flag.")
-    parser.add_argument("--use_class_weights", type=str2bool,
+    parser.add_argument("--use_weighted_loss", type=str2bool,
                         nargs='?', default=False,
                         help="Use class weights in loss function against imbalanced data if true.")
     parser.add_argument("--tencrop_test", type=str2bool,

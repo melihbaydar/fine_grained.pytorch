@@ -20,7 +20,7 @@ def train_epoch(epoch, train_loader, model, criterion, optimizer, use_cuda=True)
     print_freq = len(train_loader) // 4 + 1
     model.train()
     end = time.time()
-    for i, (_, inputs, labels) in enumerate(train_loader):
+    for i, (paths, inputs, labels) in enumerate(train_loader):
 
         if use_cuda:
             inputs, labels = inputs.cuda(), labels.cuda()

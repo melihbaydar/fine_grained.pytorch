@@ -23,7 +23,7 @@ def has_file_allowed_extension(filename, extensions):
 
 
 # Adapted from pytorch folder.py that contains DatasetFolder and ImageFolder
-def make_dataset(root, paths_dict, class_to_idx, extensions):
+def make_dataset(root, split, paths_dict, class_to_idx, extensions):
     """
 
     :param root: root folder of given dataset split
@@ -33,6 +33,7 @@ def make_dataset(root, paths_dict, class_to_idx, extensions):
     :return: images as tuple in form (path, class id)
     """
     images = []
+    root = os.path.join(root, split)
     root = os.path.expanduser(root)
     for target in sorted(class_to_idx.keys()):
         class_dir = os.path.join(root, target)
@@ -69,11 +70,13 @@ def _create_paths_dict(root_dir, split, split_percentage):
         total += num_images
 
         all_indices = np.array(np.random.permutation(range(num_images)))
+        if split == 'val':
+            split_percentage = 1 - split_percentage
         split_border = np.int(num_images * split_percentage)
         split_ind = all_indices[:split_border] if split == 'train' else all_indices[split_border:]
         split_paths = [os.path.join(class_dir, image_names[i]) for i in split_ind]
         paths_dict[class_name] = split_paths
-    return  paths_dict
+    return paths_dict
 
 
 def _compute_class_weights(paths_dict, class_to_idx):
@@ -103,7 +106,7 @@ class CassavaTestFolder(ImageFolder):
 
 class CassavaFolder(ImageFolder):
 
-    def __init__(self, root, split, split_percentage=0.2, transform=None):
+    def __init__(self, root, split, split_percentage=0.8, transform=None):
         """
         A variation of ImageFolder class of pytorch adapted to cassava dataset
         :param root: root directory of cassava dataset that contains train-test-extraimages splits
@@ -111,7 +114,7 @@ class CassavaFolder(ImageFolder):
         :param split_percentage: 'used only for 'train' and 'val' sets if needed
         :param transform: a series of pytorch transforms to apply to images
         """
-        super(CassavaFolder, self).__init__(root, transform=transform)
+        super(CassavaFolder, self).__init__(root=root, transform=transform)
         if split in ['train', 'val']:
             paths_dict = _create_paths_dict(root, split, split_percentage)
         else:  # extraimages
@@ -122,5 +125,16 @@ class CassavaFolder(ImageFolder):
                 paths_dict = json.load(fp)
         self.classes = sorted(paths_dict.keys())
         self.class_to_idx = dict(zip(self.classes, range(len(self.classes))))
-        self.imgs = make_dataset(root, paths_dict, self.class_to_idx, self.extensions)
-        self.class_weights = _compute_class_weights(paths_dict, class_to_idx)
+        self.samples = self.imgs = make_dataset(root, split, paths_dict, self.class_to_idx, self.extensions)
+        self.class_weights = _compute_class_weights(paths_dict, self.class_to_idx)
+
+    def __getitem__(self, item):
+
+        path, target = self.imgs[item]
+        img = self.loader(path)
+        if self.transform is not None:
+            img = self.transform(img)
+        if self.target_transform is not None:
+            target = self.target_transform(target)
+
+        return path, img, target

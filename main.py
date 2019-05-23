@@ -19,12 +19,12 @@ def main():
     print("Batch size: ", args.batch_size)
     print('Arch: ', args.arch)
     print('Optimizer: ', args.optim)
-    print('{}'.format('Weighted loss' if args.use_class_weights else 'Balanced loss'))
+    print('Weighted loss: ', args.use_weighted_loss)
 
     dir_path = os.path.dirname(__file__)
 
     print('Loading dataset and dataloader..')
-    train_set, train_loader = data_fact.get_dataloader(args, 'train')
+    train_set, train_loader = data_fact.get_dataloader(args, 'train', split_percentage=1)
     # if args.subset_finetune:
     #     train_set, train_loader = data_fact.get_dataloader(args, 'subset')
     if args.validate:
@@ -34,7 +34,7 @@ def main():
     num_classes = len(train_set.classes)
 
     class_weights = [1] * num_classes
-    if args.use_class_weights:
+    if args.use_weighted_loss:
         class_weights = train_set.class_weights
     class_weights = torch.Tensor(class_weights)
 
@@ -92,9 +92,10 @@ def main():
                 best_perf5 = perf_indicator5
                 best_epoch = epoch
 
-                checkpoint_file = '{}_{}_{}_{}{}'.format(
+                checkpoint_file = '{}_{}_{}_{}{}{}'.format(
                     args.model_input_size, args.arch, args.optim,
-                    args.batch_size, '_subset' if args.subset_finetune else '')
+                    args.batch_size, '_subset' if args.subset_finetune else '',
+                    '_weightedloss' if args.use_weighted_loss else '')
 
                 save_checkpoint({
                     'epoch': epoch + 1,
@@ -109,9 +110,10 @@ def main():
                 }, dir_path, is_best=True, filename=checkpoint_file)
 
             if (epoch+1) % 5 == 0:
-                checkpoint_file = 'Epoch{}_{}_{}_{}_{}{}'.format(
+                checkpoint_file = 'Epoch{}_{}_{}_{}_{}{}{}'.format(
                     epoch + 1, args.model_input_size, args.arch, args.optim,
-                    args.batch_size, '_subset' if args.subset_finetune else '')
+                    args.batch_size, '_subset' if args.subset_finetune else '',
+                    '_weightedloss' if args.use_weighted_loss else '')
 
                 save_checkpoint({
                     'epoch': epoch + 1,
