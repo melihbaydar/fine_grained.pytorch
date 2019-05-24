@@ -13,7 +13,10 @@ from torch.utils.model_zoo import load_url as load_state_dict_from_url
 __all__ = ['SENet', 'senet154', 'se_resnet50', 'se_resnet101', 'se_resnet152',
            'se_resnext50_32x4d', 'se_resnext101_32x4d']
 
-model_url = 'http://data.lip6.fr/cadene/pretrainedmodels/senet154-c7b49a05.pth'
+model_urls = {
+    'senet154':  'http://data.lip6.fr/cadene/pretrainedmodels/senet154-c7b49a05.pth',
+    'se_resnext101_32x4d': 'http://data.lip6.fr/cadene/pretrainedmodels/se_resnext101_32x4d-3b2fe3d8.pth'
+}
 
 pretrained_settings = {
     'senet154': {
@@ -369,9 +372,9 @@ class SENet(nn.Module):
         x = self.logits(x)
         return x
 
-    def load_pretrained_network(self, dataset_numclasses):
-        print('Loading pretrained model from {}..', model_url)
-        state_dict = load_state_dict_from_url(model_url, progress=True)
+    def load_pretrained_network(self, arch, dataset_numclasses):
+        print('Loading pretrained model from {}..', model_urls[arch])
+        state_dict = load_state_dict_from_url(model_urls[arch], progress=True)
         self.load_state_dict(state_dict)
         if self.num_classes != dataset_numclasses:
             self.num_classes = dataset_numclasses
@@ -384,14 +387,25 @@ class SENet(nn.Module):
         self.load_state_dict(state_dict)
 
 
-def senet154(dataset_numclasses, state_dict=None, pretrained='imagenet'):
-    model = SENet(SEBottleneck, [3, 8, 36, 3], groups=64, reduction=16,
-                  dropout_p=0.2)
+def _senet(arch, dataset_numclasses, state_dict, pretrained,
+           block, layers, groups, reduction, dropout_p=0.2, inplanes=128,
+           input_3x3=True, downsample_kernel_size=3, downsample_padding=1):
+    model = SENet(block, layers, groups=groups, reduction=reduction,
+                  dropout_p=dropout_p, inplanes = inplanes, input_3x3=input_3x3,
+                  downsample_kernel_size=downsample_kernel_size,
+                  downsample_padding=downsample_padding)
     if state_dict:
         model.load_finetuned_network(dataset_numclasses, state_dict)
     elif pretrained:
-        model.load_pretrained_network(dataset_numclasses)
+        model.load_pretrained_network(arch, dataset_numclasses)
     return model
+
+
+def senet154(dataset_numclasses, state_dict=None, pretrained='imagenet'):
+    return _senet('senet154', dataset_numclasses=dataset_numclasses,
+                  state_dict=None, pretrained='imagenet',
+                  block=SEBottleneck, layers=[3, 8, 36, 3], groups=64, reduction=16,
+                  dropout_p=0.2)
 
 
 # def se_resnet50(num_classes=1000, pretrained='imagenet'):
@@ -436,14 +450,11 @@ def senet154(dataset_numclasses, state_dict=None, pretrained='imagenet'):
 #         settings = pretrained_settings['se_resnext50_32x4d'][pretrained]
 #         initialize_pretrained_model(model, num_classes, settings)
 #     return model
-#
-#
-# def se_resnext101_32x4d(num_classes=1000, pretrained='imagenet'):
-#     model = SENet(SEResNeXtBottleneck, [3, 4, 23, 3], groups=32, reduction=16,
-#                   dropout_p=None, inplanes=64, input_3x3=False,
-#                   downsample_kernel_size=1, downsample_padding=0,
-#                   num_classes=num_classes)
-#     if pretrained is not None:
-#         settings = pretrained_settings['se_resnext101_32x4d'][pretrained]
-#         initialize_pretrained_model(model, num_classes, settings)
-#     return model
+
+
+def se_resnext101_32x4d(dataset_numclasses, state_dict=None, pretrained='imagenet'):
+    return _senet('se_resnext101_32x4d', dataset_numclasses=dataset_numclasses,
+                  state_dict=None, pretrained='imagenet',
+                  block=SEResNeXtBottleneck, layers=[3, 4, 23, 3], groups=32, reduction=16,
+                  dropout_p=None, inplanes=64, input_3x3=False,
+                  downsample_kernel_size=1, downsample_padding=0)

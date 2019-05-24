@@ -1,0 +1,1 @@
+Network implementations are taken from official pytorch networks and https://github.com/Cadene/pretrained-models.pytorch
