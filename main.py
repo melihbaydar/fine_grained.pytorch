@@ -39,6 +39,7 @@ def main():
     class_weights = [1] * num_classes
     if args.use_weighted_loss:
         class_weights = train_set.class_weights
+        print("Class weights: ", class_weights)
     class_weights = torch.Tensor(class_weights)
 
     criterion = nn.CrossEntropyLoss(class_weights)
@@ -65,6 +66,7 @@ def main():
         state_dict = checkpoint['state_dict']
         optimizer_dict = checkpoint['optimizer']
         print('Begin epoch: ', begin_epoch)
+        print('Best Acc@1 at epoch {}: {}'.format(best_epoch, best_perf1))
         # scheduler.load_state_dict(checkpoint['scheduler'])
 
     model = model_factory.generate_model(args.arch, num_classes, state_dict, args.use_cuda)
@@ -74,7 +76,7 @@ def main():
         for param_group in optimizer.param_groups:
             param_group['lr'] = args.lr
             begin_epoch = 0
-    print('Learning rate: {:.1e}', optimizer.param_groups[0]['lr'])
+    print('Learning rate: {%.1e}', optimizer.param_groups[0]['lr'])
 
     if args.train:
         for epoch in range(begin_epoch, args.num_epochs):
@@ -87,7 +89,7 @@ def main():
                 perf_indicator1, perf_indicator5 = validate_epoch(
                     val_loader, model, criterion, args.use_cuda)
             # scheduler.step(perf_indicator1)
-            if epoch+1 < 45:
+            if epoch+1 < 100:
                 adjust_learning_rate(optimizer, epoch+1, args)
 
             if perf_indicator1 >= best_perf1:
