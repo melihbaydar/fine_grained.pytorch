@@ -24,14 +24,14 @@ def main():
     dir_path = os.path.dirname(__file__)
 
     print('Loading dataset and dataloader..')
-    train_percentage = 0.8
+    train_percentage = args.train_percentage
     if not args.validate:
         train_percentage = 1
     train_set, train_loader = data_fact.get_dataloader(args, 'train', train_percentage=train_percentage)
     # if args.subset_finetune:
     #     train_set, train_loader = data_fact.get_dataloader(args, 'subset')
     if args.validate:
-        val_set, val_loader = data_fact.get_dataloader(args, 'val')
+        val_set, val_loader = data_fact.get_dataloader(args, 'val', train_percentage=train_percentage)
     if args.test:
         test_set, test_loader = data_fact.get_dataloader(args, 'test')
     num_classes = len(train_set.classes)

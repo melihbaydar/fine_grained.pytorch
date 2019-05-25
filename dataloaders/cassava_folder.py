@@ -23,7 +23,7 @@ def has_file_allowed_extension(filename, extensions):
 
 
 # Adapted from pytorch folder.py that contains DatasetFolder and ImageFolder
-def make_dataset(root, split, paths_dict, class_to_idx, extensions):
+def make_dataset(root, paths_dict, class_to_idx, extensions):
     """
 
     :param root: root folder of given dataset split
@@ -33,7 +33,7 @@ def make_dataset(root, split, paths_dict, class_to_idx, extensions):
     :return: images as tuple in form (path, class id)
     """
     images = []
-    root = os.path.join(root, split)
+    root = os.path.join(root, 'train')
     root = os.path.expanduser(root)
     for target in sorted(class_to_idx.keys()):
         class_dir = os.path.join(root, target)
@@ -57,7 +57,7 @@ def _create_paths_dict(root_dir, split, split_percentage):
     :return paths_dict: a dictionary consisting of class names as
                         keys and image paths as a list for each key
     """
-    split_dir = os.path.join(root_dir, 'train')
+    split_dir = os.path.join(root_dir, 'train')  # get both train and validation data from train dir
     class_names = sorted(os.listdir(split_dir))
     paths_dict = dict()
     total = 0
@@ -70,8 +70,8 @@ def _create_paths_dict(root_dir, split, split_percentage):
         total += num_images
 
         all_indices = np.array(np.random.permutation(range(num_images)))
-        if split == 'val':
-            split_percentage = 1 - split_percentage
+        # if split == 'val':
+        #     split_percentage = 1 - split_percentage
         split_border = np.int(num_images * split_percentage)
         split_ind = all_indices[:split_border] if split == 'train' else all_indices[split_border:]
         split_paths = [os.path.join(class_dir, image_names[i]) for i in split_ind]
@@ -125,7 +125,7 @@ class CassavaFolder(ImageFolder):
                 paths_dict = json.load(fp)
         self.classes = sorted(paths_dict.keys())
         self.class_to_idx = dict(zip(self.classes, range(len(self.classes))))
-        self.samples = self.imgs = make_dataset(root, split, paths_dict, self.class_to_idx, self.extensions)
+        self.samples = self.imgs = make_dataset(root, paths_dict, self.class_to_idx, self.extensions)
         self.class_weights = _compute_class_weights(paths_dict, self.class_to_idx)
 
     def __getitem__(self, item):

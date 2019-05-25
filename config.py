@@ -40,6 +40,10 @@ def parse_args():
                         help='Learning rate',
                         type=float,
                         default=1e-2)
+    parser.add_argument('--train_percentage',
+                        help='Training set percentage, val set will not be used if set to 1',
+                        type=float,
+                        default=1)
     parser.add_argument("--train", type=str2bool,
                         nargs='?', default=True,
                         help="Training flag.")
@@ -55,7 +59,7 @@ def parse_args():
                         help="Test flag.")
     parser.add_argument("--subset_finetune", type=str2bool,
                         nargs='?', default=False,
-                        help="Test flag.")
+                        help="Balanced subset finetuning flag.")
     parser.add_argument("--use_weighted_loss", type=str2bool,
                         nargs='?', default=False,
                         help="Use class weights in loss function against imbalanced data if true.")

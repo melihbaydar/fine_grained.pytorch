@@ -119,7 +119,8 @@ def test_cassava(test_loader, model, class_names, tencrop_test, args):
 
     results_dict = {'Category': preds, 'Id': image_names}
     results_df = pd.DataFrame(results_dict)
-    submission_file = 'Epoch{}_{}_{}_{}_{}{}.csv'.format(
+    submission_file = 'Epoch{}_{}_{}_{}_{}{}{}.csv'.format(
         args.num_epochs, args.model_input_size, args.arch,
-        args.optim, args.batch_size, '_subset' if args.subset_finetune else '')
+        args.optim, args.batch_size, '_subset' if args.subset_finetune else '',
+        '_weightedloss' if args.use_weighted_loss else '')
     results_df.to_csv(submission_file, index=False)
