@@ -88,9 +88,6 @@ def main():
             if args.validate:
                 perf_indicator1, perf_indicator5 = validate_epoch(
                     val_loader, model, criterion, args.use_cuda)
-            # scheduler.step(perf_indicator1)
-            if epoch+1 < 100:
-                adjust_learning_rate(optimizer, epoch+1, args)
 
             if perf_indicator1 >= best_perf1:
                 best_perf1 = perf_indicator1
@@ -136,6 +133,9 @@ def main():
                 epoch+1, perf_indicator1, perf_indicator5))
             print('Best perf acc@1: {}, perf acc@5: {} at epoch {}'.format(
                 best_perf1, best_perf5, best_epoch+1))
+            # scheduler.step(perf_indicator1)
+            if epoch+1 < 100:
+                adjust_learning_rate(optimizer, epoch+1, args)
 
     if args.test:
         test_cassava(test_loader, model, train_set.classes, args.tencrop_test, args)

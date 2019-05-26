@@ -4,6 +4,10 @@ import torchvision.transforms as transforms
 from dataloaders import cassava_folder
 
 
+competition_root_path = '/../cassava'
+# competition_root_path = '/../../competitions/idesigner'
+
+
 def get_dataloader(args, data_split, train_percentage=0.8):
     # initialize datasets and dataloaders
     # resize_res: 256 for 224, 512 for 448, 640 for 560
@@ -25,13 +29,13 @@ def get_dataloader(args, data_split, train_percentage=0.8):
             transforms.Normalize(mean=mean_vec, std=std_vec)
         ])
         dataset = cassava_folder.CassavaFolder(
-            root=dir_path + '/../cassava', split='train',
+            root=dir_path + competition_root_path, split='train',
             split_percentage=train_percentage, transform=train_transform)
         num_train_samples = len(dataset)
 
         if args.use_extraimages:
             extra_dataset = cassava_folder.CassavaFolder(
-                root=dir_path + '/../cassava', split='extraimages',
+                root=dir_path + competition_root_path, split='extraimages',
                 transform=train_transform)
             print("Number of extra samples: ", len(extra_dataset))
             dataset = torch.utils.data.ConcatDataset[dataset, extra_dataset]
@@ -55,7 +59,7 @@ def get_dataloader(args, data_split, train_percentage=0.8):
         ])
 
         dataset = cassava_folder.CassavaFolder(
-            root=dir_path + '/../cassava', split='val',
+            root=dir_path + competition_root_path, split='val',
             split_percentage=train_percentage, transform=val_transform)
 
         loader = torch.utils.data.DataLoader(
@@ -74,7 +78,7 @@ def get_dataloader(args, data_split, train_percentage=0.8):
         ])
 
         dataset = cassava_folder.CassavaTestFolder(
-            root=dir_path + '/../cassava/test', transform=test_transform)
+            root=dir_path + competition_root_path, transform=test_transform)
 
         loader = torch.utils.data.DataLoader(
             dataset, batch_size=1, shuffle=True,

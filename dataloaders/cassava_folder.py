@@ -59,6 +59,7 @@ def _create_paths_dict(root_dir, split, split_percentage):
     """
     split_dir = os.path.join(root_dir, 'train')  # get both train and validation data from train dir
     class_names = sorted(os.listdir(split_dir))
+    class_names = [ch for ch in class_names if '.' not in ch]  # remove folder name if contains dot(.) in
     paths_dict = dict()
     total = 0
     for class_name in class_names:
