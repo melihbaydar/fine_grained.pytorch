@@ -85,7 +85,7 @@ def accuracy(output, target, topk=(1,)):
 
 
 def adjust_learning_rate(optimizer, epoch, args):
-    """Sets the learning rate to the initial LR decayed by 10 every 20 epochs"""
+    """Sets the learning rate to the initial LR decayed by 10 every 20 epochs """
     step = 20
     if args.lr * (0.1 ** (epoch // step)) > 1e-5:
         lr = args.lr * (0.1 ** (epoch // step))

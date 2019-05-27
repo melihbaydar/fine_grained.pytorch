@@ -5,7 +5,7 @@ from dataloaders import cassava_folder
 
 
 competition_root_path = '/../cassava'
-# competition_root_path = '/../../competitions/idesigner'
+# competition_root_path = '/../../competitions/idesigner' 
 
 
 def get_dataloader(args, data_split, train_percentage=0.8):

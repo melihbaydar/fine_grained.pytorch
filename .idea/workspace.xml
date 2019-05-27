@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="0e1ded72-1750-4fb4-8d34-1a749a700a86" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/dataloaders/cassava_folder.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataloaders/cassava_folder.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/dataloaders/dataloader_factory.py" beforeDir="false" afterPath="$PROJECT_DIR$/dataloaders/dataloader_factory.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/utils/utils.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/utils.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -20,8 +18,8 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="162">
-              <caret line="30" column="30" lean-forward="true" selection-start-line="30" selection-start-column="30" selection-end-line="30" selection-end-column="30" />
+            <state relative-caret-position="1548">
+              <caret line="137" column="62" selection-start-line="137" selection-start-column="62" selection-end-line="137" selection-end-column="62" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -41,8 +39,8 @@
       <file leaf-file-name="senet.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/networks/senet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1314">
-              <caret line="454" column="23" selection-start-line="454" selection-start-column="4" selection-end-line="454" selection-end-column="23" />
+            <state relative-caret-position="180">
+              <caret line="364" column="31" lean-forward="true" selection-start-line="364" selection-start-column="31" selection-end-line="364" selection-end-column="31" />
               <folding>
                 <element signature="e#116#180#0" expanded="true" />
               </folding>
@@ -62,11 +60,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="dataloader_factory.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="dataloader_factory.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/dataloaders/dataloader_factory.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="126">
-              <caret line="7" column="57" lean-forward="true" selection-start-line="7" selection-start-column="57" selection-end-line="7" selection-end-column="57" />
+              <caret line="7" column="58" selection-start-line="7" selection-start-column="58" selection-end-line="7" selection-end-column="58" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -74,11 +72,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="utils.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="utils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="414">
-              <caret line="90" column="47" lean-forward="true" selection-start-line="90" selection-start-column="47" selection-end-line="90" selection-end-column="47" />
+            <state relative-caret-position="180">
+              <caret line="87" column="78" selection-start-line="87" selection-start-column="78" selection-end-line="87" selection-end-column="78" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -89,8 +87,8 @@
       <file leaf-file-name="cassava_folder.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/dataloaders/cassava_folder.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1098">
-              <caret line="61" column="105" selection-start-line="61" selection-start-column="105" selection-end-line="61" selection-end-column="105" />
+            <state relative-caret-position="126">
+              <caret line="111" column="78" lean-forward="true" selection-start-line="111" selection-start-column="78" selection-end-line="111" selection-end-column="78" />
               <folding>
                 <element signature="e#0#9#0" expanded="true" />
               </folding>
@@ -113,8 +111,8 @@
       <file leaf-file-name="config.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/config.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="756">
-              <caret line="42" column="43" selection-start-line="42" selection-start-column="27" selection-end-line="42" selection-end-column="43" />
+            <state relative-caret-position="206">
+              <caret line="59" column="38" selection-start-line="59" selection-start-column="36" selection-end-line="59" selection-end-column="38" />
             </state>
           </provider>
         </entry>
@@ -143,6 +141,7 @@
       <find>mean</find>
       <find>bn</find>
       <find>cassava</find>
+      <find>nester</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -159,9 +158,9 @@
         <option value="$PROJECT_DIR$/utils/functions.py" />
         <option value="$PROJECT_DIR$/config.py" />
         <option value="$PROJECT_DIR$/networks/pnasnet.py" />
-        <option value="$PROJECT_DIR$/utils/utils.py" />
-        <option value="$PROJECT_DIR$/main.py" />
         <option value="$PROJECT_DIR$/dataloaders/cassava_folder.py" />
+        <option value="$PROJECT_DIR$/main.py" />
+        <option value="$PROJECT_DIR$/utils/utils.py" />
         <option value="$PROJECT_DIR$/dataloaders/dataloader_factory.py" />
       </list>
     </option>
@@ -660,13 +659,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/config.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="756">
-          <caret line="42" column="43" selection-start-line="42" selection-start-column="27" selection-end-line="42" selection-end-column="43" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/utils/functions.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="306">
@@ -684,22 +676,19 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/main.py">
+    <entry file="file://$PROJECT_DIR$/config.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="162">
-          <caret line="30" column="30" lean-forward="true" selection-start-line="30" selection-start-column="30" selection-end-line="30" selection-end-column="30" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="206">
+          <caret line="59" column="38" selection-start-line="59" selection-start-column="36" selection-end-line="59" selection-end-column="38" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataloaders/cassava_folder.py">
+    <entry file="file://$PROJECT_DIR$/networks/senet.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1098">
-          <caret line="61" column="105" selection-start-line="61" selection-start-column="105" selection-end-line="61" selection-end-column="105" />
+        <state relative-caret-position="180">
+          <caret line="364" column="31" lean-forward="true" selection-start-line="364" selection-start-column="31" selection-end-line="364" selection-end-column="31" />
           <folding>
-            <element signature="e#0#9#0" expanded="true" />
+            <element signature="e#116#180#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -714,30 +703,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/dataloaders/dataloader_factory.py">
+    <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="126">
-          <caret line="7" column="57" lean-forward="true" selection-start-line="7" selection-start-column="57" selection-end-line="7" selection-end-column="57" />
+        <state relative-caret-position="1548">
+          <caret line="137" column="62" selection-start-line="137" selection-start-column="62" selection-end-line="137" selection-end-column="62" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/networks/senet.py">
+    <entry file="file://$PROJECT_DIR$/utils/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1314">
-          <caret line="454" column="23" selection-start-line="454" selection-start-column="4" selection-end-line="454" selection-end-column="23" />
+        <state relative-caret-position="180">
+          <caret line="87" column="78" selection-start-line="87" selection-start-column="78" selection-end-line="87" selection-end-column="78" />
           <folding>
-            <element signature="e#116#180#0" expanded="true" />
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/utils.py">
+    <entry file="file://$PROJECT_DIR$/dataloaders/cassava_folder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="414">
-          <caret line="90" column="47" lean-forward="true" selection-start-line="90" selection-start-column="47" selection-end-line="90" selection-end-column="47" />
+        <state relative-caret-position="126">
+          <caret line="111" column="78" lean-forward="true" selection-start-line="111" selection-start-column="78" selection-end-line="111" selection-end-column="78" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/dataloaders/dataloader_factory.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="126">
+          <caret line="7" column="58" selection-start-line="7" selection-start-column="58" selection-end-line="7" selection-end-column="58" />
           <folding>
             <element signature="e#0#9#0" expanded="true" />
           </folding>
