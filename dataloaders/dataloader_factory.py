@@ -4,8 +4,8 @@ import torchvision.transforms as transforms
 from dataloaders import cassava_folder
 
 
-competition_root_path = '/../cassava'
-# competition_root_path = '/../../competitions/idesigner' 
+competition_root_path = '/../cassava/'
+# competition_root_path = '/../../competitions/idesigner'
 
 
 def get_dataloader(args, data_split, train_percentage=0.8):
@@ -78,7 +78,7 @@ def get_dataloader(args, data_split, train_percentage=0.8):
         ])
 
         dataset = cassava_folder.CassavaTestFolder(
-            root=dir_path + competition_root_path, transform=test_transform)
+            root=dir_path + competition_root_path + '/test', transform=test_transform)
 
         loader = torch.utils.data.DataLoader(
             dataset, batch_size=1, shuffle=True,

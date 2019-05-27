@@ -403,7 +403,7 @@ def _senet(arch, dataset_numclasses, state_dict, pretrained,
 
 def senet154(dataset_numclasses, state_dict=None, pretrained='imagenet'):
     return _senet('senet154', dataset_numclasses=dataset_numclasses,
-                  state_dict=None, pretrained='imagenet',
+                  state_dict=state_dict, pretrained=pretrained,
                   block=SEBottleneck, layers=[3, 8, 36, 3], groups=64, reduction=16,
                   dropout_p=0.2)
 
