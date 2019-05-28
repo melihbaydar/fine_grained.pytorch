@@ -135,7 +135,7 @@ def main():
                 best_perf1, best_perf5, best_epoch+1))
             # scheduler.step(perf_indicator1)
             if epoch+1 < 100:
-                adjust_learning_rate(optimizer, epoch+1, args)
+                adjust_learning_rate(optimizer, epoch+1, args, steps=2, dec_rate=0.9)
 
     if args.test:
         test_cassava(test_loader, model, train_set.classes, args.tencrop_test, args)

@@ -48,7 +48,7 @@ def make_dataset(root, paths_dict, class_to_idx, extensions):
     return images
 
 
-def _create_paths_dict(root_dir, split, split_percentage):
+def _create_paths_dict(root_dir, split, split_percentage, seed=None):
     """
 
     :param root_dir:
@@ -64,15 +64,16 @@ def _create_paths_dict(root_dir, split, split_percentage):
     total = 0
     for class_name in class_names:
         # for consistent random split generation between runs, set seed
-        np.random.seed(12)
+        np.random.seed(seed)
         class_dir = os.path.join(split_dir, class_name)
         image_names = sorted(os.listdir(class_dir))
         num_images = len(image_names)
         total += num_images
 
         all_indices = np.array(np.random.permutation(range(num_images)))
-        # if split == 'val':
-        #     split_percentage = 1 - split_percentage
+        if split == 'val':
+            # split_percentage = 1 - split_percentage
+            split_percentage = 0.9
         split_border = np.int(num_images * split_percentage)
         split_ind = all_indices[:split_border] if split == 'train' else all_indices[split_border:]
         split_paths = [os.path.join(class_dir, image_names[i]) for i in split_ind]

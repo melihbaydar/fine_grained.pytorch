@@ -84,15 +84,29 @@ def accuracy(output, target, topk=(1,)):
         return res
 
 
-def adjust_learning_rate(optimizer, epoch, args):
-    """Sets the learning rate to the initial LR decayed by 10 every 20 epochs """
-    step = 20
-    if args.lr * (0.1 ** (epoch // step)) > 1e-5:
-        lr = args.lr * (0.1 ** (epoch // step))
+def adjust_learning_rate(optimizer, epoch, args, steps=(20, 40), dec_rate=0.1):
+    """Decreases the learning rate to the initial LR decayed by dec_rate every given step """
+    assert type(steps) in [list, tuple, int]
+    changed_flag = False
+    lr = optimizer.param_groups[0]['lr']
+    if type(steps) == int:
+        if epoch % steps == 0:
+            changed_flag = True
+    else:
+        if epoch in steps:
+            changed_flag = True
+    if changed_flag:
+        lr *= dec_rate
         for param_group in optimizer.param_groups:
-            if param_group['lr'] != lr:
-                print('Decreasing learning rate to {:1.5f}'.format(lr))
+            print('Decreasing learning rate to {:1.5f}'.format(lr))
             param_group['lr'] = lr
+    # step = 20
+    # if args.lr * (0.1 ** (epoch // step)) > 1e-5:
+    #     lr = args.lr * (0.1 ** (epoch // step))
+    #     for param_group in optimizer.param_groups:
+    #         if param_group['lr'] != lr:
+    #             print('Decreasing learning rate to {:1.5f}'.format(lr))
+    #         param_group['lr'] = lr
 
 
 def save_checkpoint(states, output_dir, is_best=False, filename='checkpoint.pth'):
