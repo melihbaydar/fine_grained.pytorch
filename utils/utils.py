@@ -85,7 +85,10 @@ def accuracy(output, target, topk=(1,)):
 
 
 def adjust_learning_rate(optimizer, epoch, args, steps=(20, 40), dec_rate=0.1):
-    """Decreases the learning rate to the initial LR decayed by dec_rate every given step """
+    """
+    Decreases the learning rate to the initial LR decayed by dec_rate every given step
+    If steps is an integer, decreases lr every <steps> epoch by dec_rate
+    """
     assert type(steps) in [list, tuple, int]
     changed_flag = False
     lr = optimizer.param_groups[0]['lr']

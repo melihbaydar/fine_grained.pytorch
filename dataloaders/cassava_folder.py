@@ -25,7 +25,7 @@ def has_file_allowed_extension(filename, extensions):
 # Adapted from pytorch folder.py that contains DatasetFolder and ImageFolder
 def make_dataset(root, paths_dict, class_to_idx, extensions):
     """
-
+    Generates (path, label) tuples for each of the sample and returns as a list
     :param root: root folder of given dataset split
     :param paths_dict: contains class names as keys and image paths as values
     :param class_to_idx: class to index dictionary
@@ -71,9 +71,8 @@ def _create_paths_dict(root_dir, split, split_percentage, seed=None):
         total += num_images
 
         all_indices = np.array(np.random.permutation(range(num_images)))
-        if split == 'val':
-            # split_percentage = 1 - split_percentage
-            split_percentage = 0.9
+        if split == 'val':  # given percentage is for val, so split for train and get the rest
+            split_percentage = 1 - split_percentage  # get train set split percentage
         split_border = np.int(num_images * split_percentage)
         split_ind = all_indices[:split_border] if split == 'train' else all_indices[split_border:]
         split_paths = [os.path.join(class_dir, image_names[i]) for i in split_ind]

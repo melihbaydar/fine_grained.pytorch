@@ -28,6 +28,7 @@ def main():
     if not args.validate:
         train_percentage = 1
     train_set, train_loader = data_fact.get_dataloader(args, 'train', train_percentage=train_percentage)
+    # finetune on a balanced subset
     # if args.subset_finetune:
     #     train_set, train_loader = data_fact.get_dataloader(args, 'subset')
     if args.validate:
@@ -36,7 +37,7 @@ def main():
         test_set, test_loader = data_fact.get_dataloader(args, 'test')
     num_classes = len(train_set.classes)
 
-    class_weights = [1] * num_classes
+    class_weights = [1.0] * num_classes
     if args.use_weighted_loss:
         class_weights = train_set.class_weights
         print("Class weights: ", class_weights)
@@ -52,6 +53,8 @@ def main():
     best_epoch = 0
     state_dict = None
     optimizer_dict = None
+    scheduler_steps = [30, 60, 90]
+    scheduler_decay = 0.1
 
     if args.resume_path:
         print('Loading finetuned model from {}..', args.resume_path)
@@ -135,7 +138,7 @@ def main():
                 best_perf1, best_perf5, best_epoch+1))
             # scheduler.step(perf_indicator1)
             if epoch+1 < 100:
-                adjust_learning_rate(optimizer, epoch+1, args, steps=2, dec_rate=0.9)
+                adjust_learning_rate(optimizer, epoch+1, args, steps=scheduler_steps, dec_rate=scheduler_decay)
 
     if args.test:
         test_cassava(test_loader, model, train_set.classes, args.tencrop_test, args)

@@ -1,10 +1,13 @@
 import os
 import time
 import torch
+import torch.nn.functional as F
 
 from utils import utils
 import pandas as pd
+import numpy as np
 from utils import _init_paths
+from sklearn.metrics import confusion_matrix
 
 
 def train_epoch(epoch, train_loader, model, criterion, optimizer, use_cuda=True):
@@ -18,6 +21,8 @@ def train_epoch(epoch, train_loader, model, criterion, optimizer, use_cuda=True)
         top1, top5, losses, prefix="Epoch: [{}]".format(epoch + 1))
 
     print_freq = len(train_loader) // 4 + 1
+    all_preds = []
+    all_labels = []
     model.train()
     end = time.time()
     for i, (paths, inputs, labels) in enumerate(train_loader):
@@ -40,6 +45,11 @@ def train_epoch(epoch, train_loader, model, criterion, optimizer, use_cuda=True)
         top1.update(acc1[0], inputs.size(0))
         top5.update(acc5[0], inputs.size(0))
 
+        # for confusion matrix calculation
+        _, preds = outputs.topk(1, 1, True, True)
+        all_preds.extend(preds.cpu().numpy())
+        all_labels.extend(labels.cpu().numpy())
+
         # zero the parameter gradients
         optimizer.zero_grad()
         loss.backward()
@@ -53,6 +63,7 @@ def train_epoch(epoch, train_loader, model, criterion, optimizer, use_cuda=True)
         if i % print_freq == 0 or i + 1 == len(train_loader):
             progress.print(i+1)
 
+    print(confusion_matrix(all_labels, all_preds))
     return top1.avg, top5.avg
 
 
@@ -65,6 +76,8 @@ def validate_epoch(val_loader, model, criterion, use_cuda=True):
                                    prefix='Val: ')
 
     # switch to evaluate mode
+    all_preds = []
+    all_labels = []
     model.eval()
     print_freq = len(val_loader) // 4 + 1
     with torch.no_grad():
@@ -83,6 +96,11 @@ def validate_epoch(val_loader, model, criterion, use_cuda=True):
             top1.update(acc1[0], inputs.size(0))
             top5.update(acc5[0], inputs.size(0))
 
+            # for confusion matrix calculation
+            _, preds = outputs.topk(1, 1, True, True)
+            all_preds.extend(preds.cpu().numpy())
+            all_labels.extend(labels.cpu().numpy())
+
             # measure elapsed time
             batch_time.update(time.time() - end)
             end = time.time()
@@ -90,6 +108,7 @@ def validate_epoch(val_loader, model, criterion, use_cuda=True):
             if i % print_freq == 0 or i+1 == len(val_loader):
                 progress.print(i+1)
 
+        print(confusion_matrix(all_labels, all_preds))
         return top1.avg, top5.avg
 
 
@@ -98,6 +117,7 @@ def test_cassava(test_loader, model, class_names, tencrop_test, args):
     model.eval()
     preds = []
     image_names = []
+    softmax_outs = []
     report_freq = len(test_loader) // 9 + 1
     with torch.no_grad():
         for i, (path, input, label) in enumerate(test_loader):
@@ -111,6 +131,7 @@ def test_cassava(test_loader, model, class_names, tencrop_test, args):
                 outputs = outputs.view(bs, ncrops, -1).mean(1)  # avg over crops
             else:
                 outputs = model(input)
+            softmax_outs.extend(F.softmax(outputs).cpu().numpy())
             _, pred = outputs.topk(1, 1, True, True)
             preds.append(class_names[pred])
 
@@ -119,8 +140,15 @@ def test_cassava(test_loader, model, class_names, tencrop_test, args):
 
     results_dict = {'Category': preds, 'Id': image_names}
     results_df = pd.DataFrame(results_dict)
-    submission_file = 'Epoch{}_{}_{}_{}_{}{}{}.csv'.format(
+    submission_file = 'Epoch{}_{}_{}_{}_{}{}{}'.format(
         args.num_epochs, args.model_input_size, args.arch,
         args.optim, args.batch_size, '_subset' if args.subset_finetune else '',
         '_weightedloss' if args.use_weighted_loss else '')
-    results_df.to_csv(submission_file, index=False)
+    i = 1
+    # if there is another file with same name, find a new name using i variable in filename
+    while os.path.exists(str(i) + '_' + submission_file + '.csv'):
+        i += 1
+    # export prediction in requested kaggle competition format
+    results_df.to_csv(str(i) + '_' + submission_file + '.csv', index=False)
+    # save softmax outputs for later ensembling
+    np.save(str(i) + submission_file, np.asarray(softmax_outs))

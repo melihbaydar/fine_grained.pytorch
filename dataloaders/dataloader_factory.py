@@ -60,7 +60,7 @@ def get_dataloader(args, data_split, train_percentage=0.8):
 
         dataset = cassava_folder.CassavaFolder(
             root=dir_path + competition_root_path, split='val',
-            split_percentage=train_percentage, transform=val_transform)
+            split_percentage=1-train_percentage, transform=val_transform)
 
         loader = torch.utils.data.DataLoader(
             dataset, batch_size=args.batch_size,
@@ -81,7 +81,7 @@ def get_dataloader(args, data_split, train_percentage=0.8):
             root=dir_path + competition_root_path + '/test', transform=test_transform)
 
         loader = torch.utils.data.DataLoader(
-            dataset, batch_size=1, shuffle=True,
+            dataset, batch_size=1, shuffle=False,
             num_workers=4, pin_memory=True)
 
         print("Number of test samples: ", len(dataset))
