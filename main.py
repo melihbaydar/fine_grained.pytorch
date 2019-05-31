@@ -53,8 +53,8 @@ def main():
     best_epoch = 0
     state_dict = None
     optimizer_dict = None
-    scheduler_steps = [30, 60, 90]
-    scheduler_decay = 0.1
+    scheduler_steps = 2  # [30, 60, 90]
+    scheduler_decay = 0.9  # 0.1
 
     if args.resume_path:
         print('Loading finetuned model from {}..', args.resume_path)
