@@ -60,10 +60,10 @@ def main():
         print('Loading finetuned model from {}..', args.resume_path)
         checkpoint = torch.load(args.resume_path)
         begin_epoch = checkpoint['epoch']
-        # best_epoch = begin_epoch
-        best_epoch = checkpoint['best_epoch']
+        best_epoch = begin_epoch
+        # best_epoch = checkpoint['best_epoch']
         best_perf1 = checkpoint['perf1']
-        best_perf5 = checkpoint['perf5']
+        # best_perf5 = checkpoint['perf5']
         args.arch = checkpoint['arch']
         num_classes = checkpoint['num_classes']
         state_dict = checkpoint['state_dict']
