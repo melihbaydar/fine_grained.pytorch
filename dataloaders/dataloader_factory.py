@@ -10,7 +10,7 @@ competition_root_path = '/../cassava/'
 
 def get_dataloader(args, data_split, train_percentage=0.8):
     # initialize datasets and dataloaders
-    # resize_res: 256 for 224, 512 for 448, 640 for 560
+    # resize_res: 256 for 224, 512 for 448, 640 for 560 (to crop from a higher resolution)
     resize_res = int(args.model_input_size * 1000 / 875)
     print('Transform resize resolution: ', resize_res)
     mean_vec = cassava_folder.mean_vec
@@ -23,7 +23,7 @@ def get_dataloader(args, data_split, train_percentage=0.8):
             transforms.RandomRotation(15),
             transforms.RandomResizedCrop(args.model_input_size),
             transforms.RandomHorizontalFlip(),
-            #     transforms.RandomVerticalFlip(),
+            # transforms.RandomVerticalFlip(),
             transforms.ColorJitter(brightness=0.2, contrast=0.2, saturation=0.2),
             transforms.ToTensor(),
             transforms.Normalize(mean=mean_vec, std=std_vec)

@@ -25,12 +25,9 @@ def main():
 
     print('Loading dataset and dataloader..')
     train_percentage = args.train_percentage
-    if not args.validate:
-        train_percentage = 1
+    # if not args.validate:
+    #     train_percentage = 1
     train_set, train_loader = data_fact.get_dataloader(args, 'train', train_percentage=train_percentage)
-    # finetune on a balanced subset
-    # if args.subset_finetune:
-    #     train_set, train_loader = data_fact.get_dataloader(args, 'subset')
     if args.validate:
         val_set, val_loader = data_fact.get_dataloader(args, 'val', train_percentage=train_percentage)
     if args.test:
@@ -51,8 +48,8 @@ def main():
     best_perf5 = 0
     begin_epoch = 0
     best_epoch = 0
-    state_dict = None
-    optimizer_dict = None
+    state_dict = None  # won't be None if resuming from a trained model
+    optimizer_dict = None  # won't be None if resuming from a trained model
     scheduler_steps = 2  # [30, 60, 90]
     scheduler_decay = 0.9  # 0.1
 
@@ -74,11 +71,6 @@ def main():
 
     model = model_factory.generate_model(args.arch, num_classes, state_dict, args.use_cuda)
     optimizer = get_optimizer(args, model, optimizer_dict)
-    if args.subset_finetune:
-        args.lr = 1e-6  # do balanced subset finetuning with a smaller learning rate
-        for param_group in optimizer.param_groups:
-            param_group['lr'] = args.lr
-            begin_epoch = 0
     print('Learning rate: {:1.5f}', optimizer.param_groups[0]['lr'])
 
     if args.train:
@@ -114,7 +106,7 @@ def main():
                     # 'scheduler': scheduler.state_dict(),
                 }, dir_path, is_best=True, filename=checkpoint_file)
 
-            if (epoch+1) % 5 == 0:
+            if (epoch+1) % 5 == 0:  # save model every 5 epochs
                 checkpoint_file = 'Epoch{}_{}_{}_{}_{}{}{}'.format(
                     epoch + 1, args.model_input_size, args.arch, args.optim,
                     args.batch_size, '_subset' if args.subset_finetune else '',
@@ -141,7 +133,7 @@ def main():
                 adjust_learning_rate(optimizer, epoch+1, args, steps=scheduler_steps, dec_rate=scheduler_decay)
 
     if args.test:
-        test_cassava(test_loader, model, train_set.classes, args.tencrop_test, args)
+        test_cassava(test_loader, model, train_set.classes, args)
 
 
 if __name__ == '__main__':

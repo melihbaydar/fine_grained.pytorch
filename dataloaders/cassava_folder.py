@@ -4,6 +4,7 @@ import numpy as np
 from sklearn.utils.class_weight import compute_class_weight
 from torchvision.datasets import ImageFolder
 
+# pre-calculated from training data
 mean_vec = [0.4478, 0.4967, 0.3218]
 std_vec = [0.2053, 0.2062, 0.1792]
 
@@ -99,8 +100,6 @@ class CassavaTestFolder(ImageFolder):
         img = self.loader(path)
         if self.transform is not None:
             img = self.transform(img)
-        if self.target_transform is not None:
-            target = self.target_transform(target)
 
         return path, img, target
 
@@ -117,8 +116,11 @@ class CassavaFolder(ImageFolder):
         """
         super(CassavaFolder, self).__init__(root=root, transform=transform)
         if split in ['train', 'val']:
-            paths_dict = _create_paths_dict(root, split, split_percentage)
+            # given a seed for generating the same train and val splits in different runs
+            paths_dict = _create_paths_dict(root, split, split_percentage, seed=12)
         else:  # extraimages
+            # extraimages are classified by a model that scores 91.456 on public leaderboard
+            # only samples which are classified above a given confidence threshold are considered
             extraimages_threshold = 0.99
             extraimages_json = 'extraimages_above_threshold_{}.json'.format(extraimages_threshold)
             extraimages_json = os.path.join(root, extraimages_json)
@@ -130,12 +132,14 @@ class CassavaFolder(ImageFolder):
         self.class_weights = _compute_class_weights(paths_dict, self.class_to_idx)
 
     def __getitem__(self, item):
-
+        """
+        Returns path of the image as extra to ImageFolder class
+        :param item:
+        :return:
+        """
         path, target = self.imgs[item]
         img = self.loader(path)
         if self.transform is not None:
             img = self.transform(img)
-        if self.target_transform is not None:
-            target = self.target_transform(target)
 
         return path, img, target

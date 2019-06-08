@@ -57,9 +57,9 @@ def parse_args():
     parser.add_argument("--test", type=str2bool,
                         nargs='?', default=True,
                         help="Test flag.")
-    parser.add_argument("--subset_finetune", type=str2bool,
-                        nargs='?', default=False,
-                        help="Balanced subset finetuning flag.")
+    # parser.add_argument("--subset_finetune", type=str2bool,
+    #                     nargs='?', default=False,
+    #                     help="Balanced subset finetuning flag.")
     parser.add_argument("--use_weighted_loss", type=str2bool,
                         nargs='?', default=False,
                         help="Use class weights in loss function against imbalanced data if true.")

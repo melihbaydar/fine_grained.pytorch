@@ -43,22 +43,22 @@ class ProgressMeter(object):
         return '[' + fmt + '/' + fmt.format(num_batches) + ']'
 
 
-def get_optimizer(cfg, model, state_dict=None):
+def get_optimizer(args, model, state_dict=None):
     optimizer = None
-    if cfg.optim == 'sgd':
+    if args.optim == 'sgd':
         optimizer = optim.SGD(
             model.parameters(),
-            lr=cfg.lr,
+            lr=args.lr,
             momentum=0.9,
             weight_decay=1e-5,
             nesterov=True
         )
-    elif cfg.optim == 'adam':
+    elif args.optim == 'adam':
         optimizer = optim.Adam(
             model.parameters(),
-            lr=cfg.lr
+            lr=args.lr
         )
-    elif cfg.optim == 'rmsprop':
+    elif args.optim == 'rmsprop':
         pass
     if state_dict:
         optimizer.load_state_dict(state_dict)

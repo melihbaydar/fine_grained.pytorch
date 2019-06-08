@@ -112,7 +112,7 @@ def validate_epoch(val_loader, model, criterion, use_cuda=True):
         return top1.avg, top5.avg
 
 
-def test_cassava(test_loader, model, class_names, tencrop_test, args):
+def test_cassava(test_loader, model, class_names, args):
     end = time.time()
     model.eval()
     preds = []
@@ -125,7 +125,7 @@ def test_cassava(test_loader, model, class_names, tencrop_test, args):
             image_names.append(path[0].split('/')[-1])
             if args.use_cuda:
                 input = input.cuda()
-            if tencrop_test:
+            if args.tencrop_test:
                 bs, ncrops, c, h, w = input.size()
                 outputs = model(input.view(-1, c, h, w))  # fuse batch size and ncrop
                 outputs = outputs.view(bs, ncrops, -1).mean(1)  # avg over crops
