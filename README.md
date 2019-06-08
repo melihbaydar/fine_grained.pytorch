@@ -6,16 +6,16 @@ Your directory tree should look like this:
    ```
    ${ROOT}
    ├── cassava
-    ├── train
-      ├── cbb
-      ├── cbsd
-      ├── cgm
-      ├── cmd
-      ├── healthy
-    ├── test
-      ├── 0
-    ├── extraimages
-      ├── 0
+   | ├── train
+   | | ├── cbb
+   | | ├── cbsd
+   | | ├── cgm
+   | | ├── cmd
+   | | ├── healthy
+   | ├── test
+   | | ├── 0
+   | ├── extraimages
+   | | ├── 0
    ├── dataloaders
    ├── networks
    ├── utils
