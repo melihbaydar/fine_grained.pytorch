@@ -30,14 +30,12 @@ You can:
 
 	```
 	python main.py --arch inceptionv4 --model_input_size 560 --batch_size 16
-	
 	```
 	
 	If you want to resume training from a checkpoint, you can use:
 
 	```
 	python main.py --arch inceptionv4 --model_input_size 560 --batch_size 16 --resume_path <path_to_pth_file>
-	
 	```
 	
 	Test your trained model from a checkpoint file using:
