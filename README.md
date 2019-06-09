@@ -28,27 +28,27 @@ You can:
 
 	Train your model with inception v4 network using input image resolution 560, batch size 16 with:
 
-	```
 	python main.py --arch inceptionv4 --model_input_size 560 --batch_size 16
-	```
+	
+	---o---
 	
 	If you want to resume training from a checkpoint, you can use:
 
-	```
 	python main.py --arch inceptionv4 --model_input_size 560 --batch_size 16 --resume_path <path_to_pth_file>
-	```
+	
+	---o---
 	
 	Test your trained model from a checkpoint file using:
 	
-	```
 	python main.py --arch inceptionv4 --model_input_size 560 --batch_size 16 --train False --test true --resume_path <path_to_pth_file>
-	```
+	
+	---o---
 	
 	Use validation by splitting training data using:
 	
-	```
 	python main.py --arch inceptionv4 --model_input_size 560 --batch_size 16 --validate true --train_percentage 0.8
-	```
+	
+	---o---
 	
 	
 	
