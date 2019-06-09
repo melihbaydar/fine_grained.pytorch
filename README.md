@@ -1,4 +1,7 @@
-## Classification on cassava disease dataset of Kaggle
+## Visual classification on cassava disease dataset of Kaggle
+
+This is the implementation of Cassava Disease Fine-Grained Visual Classification Challenge, 5th place entry on Kaggle.
+Networks used in this repository are PyTorch official implementations or from https://github.com/Cadene/pretrained-models.pytorch, with small alterations.
 
 
 Your directory tree should look like this:
