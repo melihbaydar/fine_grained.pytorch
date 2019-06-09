@@ -25,8 +25,9 @@ def main():
 
     print('Loading dataset and dataloader..')
     train_percentage = args.train_percentage
-    # if not args.validate:
-    #     train_percentage = 1
+    if args.validate and args.train_percentage == 1:
+        train_percentage = 0.9
+        print('Warning: train percentage was given 1 with validation enabled, train percentage dropped to 0.9')
     train_set, train_loader = data_fact.get_dataloader(args, 'train', train_percentage=train_percentage)
     if args.validate:
         val_set, val_loader = data_fact.get_dataloader(args, 'val', train_percentage=train_percentage)
