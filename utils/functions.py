@@ -1,4 +1,5 @@
 import os
+import json
 import time
 import torch
 import torch.nn.functional as F
@@ -120,17 +121,18 @@ def test_cassava(test_loader, model, class_names, args):
     softmax_outs = []
     report_freq = len(test_loader) // 9 + 1
     with torch.no_grad():
-        for i, (path, input, label) in enumerate(test_loader):
+        # test is done with batch_size=1
+        for i, (path, inputs, label) in enumerate(test_loader):
             # print(path)
             image_names.append(path[0].split('/')[-1])
             if args.use_cuda:
-                input = input.cuda()
+                inputs = inputs.cuda()
             if args.tencrop_test:
-                bs, ncrops, c, h, w = input.size()
-                outputs = model(input.view(-1, c, h, w))  # fuse batch size and ncrop
+                bs, ncrops, c, h, w = inputs.size()
+                outputs = model(inputs.view(-1, c, h, w))  # fuse batch size and ncrop
                 outputs = outputs.view(bs, ncrops, -1).mean(1)  # avg over crops
             else:
-                outputs = model(input)
+                outputs = model(inputs)
             softmax_outs.extend(F.softmax(outputs).cpu().numpy())
             _, pred = outputs.topk(1, 1, True, True)
             preds.append(class_names[pred])
@@ -152,3 +154,35 @@ def test_cassava(test_loader, model, class_names, args):
     results_df.to_csv(str(i) + '_' + submission_file + '.csv', index=False)
     # save softmax outputs for later ensembling
     np.save(str(i) + submission_file, np.asarray(softmax_outs))
+
+
+def test_extraimages(extra_loader, model, class_names, args, threshold=0.99):
+    model.eval()
+    class_freq_above_threshold = [0] * len(class_names)
+    image_names_above_threshold = dict()
+
+    for c in class_names:
+        image_names_above_threshold[c] = []
+    report_freq = len(extra_loader) // 9 + 1
+
+    with torch.no_grad():
+        for i, (path, inputs, _) in enumerate(extra_loader):
+            image_name = path.split('/')[-1]
+            if args.use_cuda:
+                inputs = inputs.cuda()
+            outputs = model(inputs)
+            probs = F.softmax(outputs)
+            value, index = torch.max(probs, 1)
+            if value >= threshold:
+                class_freq_above_threshold[index] += 1
+                image_names_above_threshold[class_names[index]].append(image_name)
+            if (i+1) % report_freq == 0:
+                print('iter: ', i+1)
+
+    print("Class frequencies: ", class_freq_above_threshold)
+    print('Total {} of {}'.format(sum(class_freq_above_threshold), len(extra_loader)))
+    for c in class_names:
+        print(c, len(image_names_above_threshold[c]))
+    print('Saving extra images classified above given threshold to json file..')
+    with open('extraimages_above_threshold_{}.json'.format(threshold), 'w') as fp:
+        json.dump(image_names_above_threshold, fp)
